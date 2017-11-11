@@ -10,7 +10,6 @@
 
 @implementation EMBicyclist
 
-
 - (void) moving {
     NSLog(@"I pedal");
 }

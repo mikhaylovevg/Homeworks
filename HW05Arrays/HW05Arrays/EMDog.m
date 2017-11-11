@@ -10,7 +10,6 @@
 
 @implementation EMDog
 
-
 - (void) moving {
     NSLog(@"GAV!");
 }

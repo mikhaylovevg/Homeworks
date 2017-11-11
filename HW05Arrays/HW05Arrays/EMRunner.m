@@ -10,7 +10,6 @@
 
 @implementation EMRunner
 
-
 - (void) moving {
     NSLog(@"Run, Vasya, run");
 }

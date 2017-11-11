@@ -10,7 +10,6 @@
 
 @implementation EMRacer
 
-
 - (void) moving {
     [super moving];
     NSLog(@"VZHUUUUHH");

@@ -10,7 +10,6 @@
 
 @implementation EMAnimal
 
-
 - (void) moving {
     NSLog(@"RRRRR!!");
 }

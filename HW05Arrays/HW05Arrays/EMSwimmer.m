@@ -10,7 +10,6 @@
 
 @implementation EMSwimmer
 
-
 - (void) moving {
     NSLog(@"Hi, fishies");
 }

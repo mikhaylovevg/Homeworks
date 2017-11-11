@@ -10,9 +10,9 @@
 
 @interface EMAnimal : NSObject
 
-@property (strong, nonatomic) NSString* type;
-@property (strong, nonatomic) NSString* nickname;
-@property (assign, nonatomic) UInt8 year;
+@property (strong, nonatomic) NSString *type;
+@property (strong, nonatomic) NSString *nickname;
+@property (assign, nonatomic) NSInteger year;
 
 - (void) moving;
 

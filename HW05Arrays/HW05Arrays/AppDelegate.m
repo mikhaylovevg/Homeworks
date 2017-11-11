@@ -26,163 +26,161 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
-    EMHuman* human         = [[EMHuman alloc] init];
-    EMBicyclist* bicyclist = [[EMBicyclist alloc] init];
-    EMRunner* runner       = [[EMRunner alloc] init];
-    EMSwimmer* swimmer     = [[EMSwimmer alloc] init];
-    EMRacer* racer         = [[EMRacer alloc] init];
+    EMHuman *human         = [[EMHuman alloc] init];
+    EMBicyclist *bicyclist = [[EMBicyclist alloc] init];
+    EMRunner *runner       = [[EMRunner alloc] init];
+    EMSwimmer *swimmer     = [[EMSwimmer alloc] init];
+    EMRacer *racer         = [[EMRacer alloc] init];
     
     human.name   = @"Maxim";
-    human.height = 1.78f;
-    human.weight = 68.f;
+    human.height = 1.78;
+    human.weight = 68.0;
     human.gender = @"male";
     
     bicyclist.name   = @"Oleg";
-    bicyclist.height = 2.03f;
-    bicyclist.weight = 58.8f;
+    bicyclist.height = 2.03;
+    bicyclist.weight = 58.8;
     bicyclist.gender = @"male";
     
     runner.name   = @"Kate";
-    runner.height = 1.63f;
-    runner.weight = 50.f;
+    runner.height = 1.63;
+    runner.weight = 50.0;
     runner.gender = @"female";
     
     swimmer.name   = @"Dima";
-    swimmer.height = 1.65f;
-    swimmer.weight = 78.2f;
+    swimmer.height = 1.65;
+    swimmer.weight = 78.2;
     swimmer.gender = @"male";
     
     racer.name   = @"Anna";
-    racer.height = 1.50f;
-    racer.weight = 49.6f;
+    racer.height = 1.50;
+    racer.weight = 49.6;
     racer.gender = @"female";
     racer.car = @"BMW";
     racer.age = 30;
     
-    // level - pupil
-    NSArray* arrayOfHumans = [NSArray arrayWithObjects:human, bicyclist, runner, swimmer, nil];
+    NSLog(@"----level pupil----");
+    
+    NSArray *arrayOfHumans = @[human, bicyclist, runner, swimmer];
 
-    for (EMHuman* human in arrayOfHumans) {
+    for (EMHuman *human in arrayOfHumans) {
         
         NSLog(@"%@ - %@ - %.2f meters - %.1f kg", human.name, human.gender, human.height, human.weight);
         
         [human moving];
     }
     
-    NSLog(@"--------------------------------------------------------");
+    NSLog(@"----level student----");
     
-    // level - student
-    NSArray* arrayOfHumans2 = [[NSArray alloc] initWithObjects:human, bicyclist, runner, swimmer, racer, nil];
+    NSArray *someArrayOfHumans = @[human, bicyclist, runner, swimmer, racer];
     
-    for (NSInteger i = [arrayOfHumans2 count] - 1; i >= 0; i--) {
-     
-        NSLog(@"%@ - %@ - %.2f meters - %.1f kg", [arrayOfHumans2[i] name], [arrayOfHumans2[i] gender], [arrayOfHumans2[i] height], [arrayOfHumans2[i] weight]);
+    for (NSInteger i = [someArrayOfHumans count] - 1; i >= 0; i--) {
         
-        [arrayOfHumans2[i] moving];
+        EMHuman *current = someArrayOfHumans[i];
         
-        if ([arrayOfHumans2[i] isKindOfClass:[EMRacer class]]) {
+        NSLog(@"%@ - %@ - %.2f meters - %.1f kg", current.name, current.gender, current.height, current.weight);
+        
+        [current moving];
+        
+        if ([current isKindOfClass:[EMRacer class]]) {
             
-            EMRacer* racer = (EMRacer*) arrayOfHumans2[i];
+            EMRacer* racer = (EMRacer*) someArrayOfHumans[i];
             
-            NSLog(@"%@ %d years old, car: %@", racer.name, racer.age, racer.car);
+            NSLog(@"%@ %ld years old, car: %@", racer.name, (long)racer.age, racer.car);
         }
-        
     }
     
-    NSLog(@"--------------------------------------------------------");
+    NSLog(@"----level master----");
     
-    //level - master
-    EMAnimal* animal = [[EMAnimal alloc] init];
+    EMAnimal *animal = [[EMAnimal alloc] init];
     [animal setType: @"animal"];
     [animal setNickname: @"Rex"];
     [animal setYear: 1];
     
-    EMCat* cat = [[EMCat alloc] init];
+    EMCat *cat = [[EMCat alloc] init];
     [cat setType: @"cat"];
     [cat setNickname: @"Kasha"];
     [cat setYear: 2];
     
-    EMDog* dog = [[EMDog alloc] init];
+    EMDog *dog = [[EMDog alloc] init];
     [dog setType: @"dog"];
     [dog setNickname: @"Dzhulbars"];
     [dog setYear: 5];
     
-    NSArray* array = [NSArray arrayWithObjects:human, bicyclist, runner, swimmer, racer, animal, cat, dog, nil];
+    NSArray *array = @[human, bicyclist, runner, swimmer, racer, animal, cat, dog];
     
-    
-    for (int i = 0; i < [array count]; i++) {
+    for (NSInteger i = 0; i < [array count]; i++) {
         
         if ([array[i] isKindOfClass:[EMHuman class]]) {
             
-            EMHuman* somehuman = (EMHuman*) array[i];
+            EMHuman *somehuman = (EMHuman *) array[i];
             
-            NSLog(@"Human");
+            NSLog(@"%@", NSStringFromClass([EMHuman class]));
             NSLog(@"%@ - %@ - %.2f meters - %.1f kg", somehuman.name, somehuman.gender, somehuman.height, somehuman.weight);
             
-            [human moving];
-        }
-        
-        if ([array[i] isKindOfClass:[EMAnimal class]]) {
+            [somehuman moving];
             
-            EMAnimal* animal = (EMAnimal*) array[i];
+        } else if ([array[i] isKindOfClass:[EMAnimal class]]) {
             
-            NSLog(@"Animal");
+            EMAnimal* animal = (EMAnimal *) array[i];
+            
+            NSLog(@"%@", NSStringFromClass([EMAnimal class]));
             NSLog(@"%@ - %@  - %d years old", animal.type, animal.nickname, animal.year);
             
             [animal moving];
         }
     }
-    NSLog(@"--------------------------------------------------------");
-
-    //level - star
-    NSArray* arrayOfAnimals = [NSArray arrayWithObjects: animal, cat, dog, nil];
     
-    NSInteger count = 0;
+    NSLog(@"----level star----");
 
-    if ([arrayOfAnimals count] > [arrayOfHumans2 count]) {
-        count = [arrayOfAnimals count];
-    } else {
-        count = [arrayOfHumans2 count];
-    }
+    NSArray *arrayOfAnimals = @[animal, cat, dog];
     
-    for (int i = 0; i < count; i++) {
-        if (i < [arrayOfHumans2 count]) {
-            NSLog(@"HUMAN %@", [arrayOfHumans2[i] name]);
+    NSInteger count = MAX([arrayOfAnimals count], [someArrayOfHumans count]);
+    
+    for (NSInteger i = 0; i < count; i++) {
+        if (i < [someArrayOfHumans count]) {
+            
+            EMHuman *currentHuman = someArrayOfHumans[i];
+            
+            NSLog(@"HUMAN %@ - %@ - %.2f meters - %.1f kg", currentHuman.name, currentHuman.gender, currentHuman.height, currentHuman.weight);
         }
         if (i < [arrayOfAnimals count]) {
-            NSLog(@"ANIMAL %@", [arrayOfAnimals[i] nickname]);
+            
+            EMAnimal *currentAnimal = arrayOfAnimals[i];
+            
+            NSLog(@"ANIMAL %@ - %@  - %d years old", currentAnimal.type, currentAnimal.nickname, currentAnimal.year);
         }
     }
-    NSLog(@"--------------------------------------------------------");
+    
+    NSLog(@"----level superstar----");
 
-    //level - superstar
-    NSArray* totalArray = [NSArray arrayWithObjects: racer, animal, bicyclist, runner, cat, swimmer, dog, human, nil];
-    
-    //NSArray* sortedArray = [totalArray sortedArrayUsingSelector:@selector(compare:)];
+    //NSArray *totalArray = @[racer, animal, bicyclist, runner, cat, swimmer, dog, human];
     /*
-    for (int i = 0; i < [totalArray count]; i++) {
+    NSArray *sortedArray = [arrayOfAnimals sortedArrayUsingComparator:ˆNSComparisonResult:(id obj1, id obj2) {
+
         
-        if ([totalArray[i] isKindOfClass:[EMHuman class]]) {
-            
-            EMHuman* sortedHuman = (EMHuman*) totalArray[i];
-            
-            NSLog(@"Human");
-            NSLog(@"%@ - %@ - %.2f meters - %.1f kg", sortedHuman.name, sortedHuman.gender, sortedHuman.height, sortedHuman.weight);
-            
-        }
-        
-        if ([totalArray[i] isKindOfClass:[EMAnimal class]]) {
-            
-            EMAnimal* sortedAnimal = (EMAnimal*) totalArray[i];
-            
-            NSLog(@"Animal");
-            NSLog(@"%@ - %@  - %d years old", sortedAnimal.type, sortedAnimal.nickname, sortedAnimal.year);
-            
-        }
-    }
+    }];
     */
+    /*
+    NSArray *sortedArray = [totalArray sortedArrayUsingComparator: ˆ(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[EMHuman class]]) {
+            
+            EMHuman *s1 = obj1;
+            EMHuman *s2 = obj2;
+            
+            if (s1.name > s2.name) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if s1.name > s2.name) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
     
+    return sortedArray;
+    */
+
     return YES;
 }
 
