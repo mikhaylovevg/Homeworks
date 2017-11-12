@@ -24,7 +24,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
     EMHuman *human         = [[EMHuman alloc] init];
     EMBicyclist *bicyclist = [[EMBicyclist alloc] init];
@@ -84,7 +83,7 @@
         
         if ([current isKindOfClass:[EMRacer class]]) {
             
-            EMRacer* racer = (EMRacer*) someArrayOfHumans[i];
+            EMRacer* racer = (EMRacer *) someArrayOfHumans[i];
             
             NSLog(@"%@ %ld years old, car: %@", racer.name, (long)racer.age, racer.car);
         }
@@ -113,21 +112,21 @@
         
         if ([array[i] isKindOfClass:[EMHuman class]]) {
             
-            EMHuman *somehuman = (EMHuman *) array[i];
+            EMHuman *someHuman = (EMHuman *) array[i];
             
             NSLog(@"%@", NSStringFromClass([EMHuman class]));
-            NSLog(@"%@ - %@ - %.2f meters - %.1f kg", somehuman.name, somehuman.gender, somehuman.height, somehuman.weight);
+            NSLog(@"%@ - %@ - %.2f meters - %.1f kg", someHuman.name, someHuman.gender, someHuman.height, someHuman.weight);
             
-            [somehuman moving];
+            [someHuman moving];
             
         } else if ([array[i] isKindOfClass:[EMAnimal class]]) {
             
-            EMAnimal* animal = (EMAnimal *) array[i];
+            EMAnimal* someAnimal = (EMAnimal *) array[i];
             
             NSLog(@"%@", NSStringFromClass([EMAnimal class]));
-            NSLog(@"%@ - %@  - %d years old", animal.type, animal.nickname, animal.year);
+            NSLog(@"%@ - %@ - %ld years old", someAnimal.type, someAnimal.nickname, someAnimal.year);
             
-            [animal moving];
+            [someAnimal moving];
         }
     }
     
@@ -148,68 +147,62 @@
             
             EMAnimal *currentAnimal = arrayOfAnimals[i];
             
-            NSLog(@"ANIMAL %@ - %@  - %d years old", currentAnimal.type, currentAnimal.nickname, currentAnimal.year);
+            NSLog(@"ANIMAL %@ - %@  - %ld years old", currentAnimal.type, currentAnimal.nickname, currentAnimal.year);
         }
     }
     
     NSLog(@"----level superstar----");
 
-    //NSArray *totalArray = @[racer, animal, bicyclist, runner, cat, swimmer, dog, human];
-    /*
-    NSArray *sortedArray = [arrayOfAnimals sortedArrayUsingComparator:ˆNSComparisonResult:(id obj1, id obj2) {
-
-        
+    NSArray *totalArray = @[racer, dog, bicyclist, runner, cat, swimmer, animal, human];
+   
+    NSArray *sortedWithComparator = [someArrayOfHumans sortedArrayUsingComparator:^NSComparisonResult(EMHuman *p1, EMHuman *p2){
+        return [p1.name compare:p2.name];
     }];
-    */
-    /*
-    NSArray *sortedArray = [totalArray sortedArrayUsingComparator: ˆ(id obj1, id obj2){
-        if ([obj1 isKindOfClass:[EMHuman class]]) {
-            
-            EMHuman *s1 = obj1;
-            EMHuman *s2 = obj2;
-            
-            if (s1.name > s2.name) {
-                return (NSComparisonResult)NSOrderedAscending;
-            } else if s1.name > s2.name) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-        }
-        
-        return (NSComparisonResult)NSOrderedSame;
-    }];
+    for (EMHuman *human in sortedWithComparator) {
+        NSLog(@"%@ - %@", NSStringFromClass([EMHuman class]), human.name);
+    }
     
-    return sortedArray;
-    */
+    NSSortDescriptor *nicknameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"nickname" ascending:YES];
+    
+    NSArray *sortedWithDescriptors = [arrayOfAnimals sortedArrayUsingDescriptors:@[nicknameSortDescriptor]];
+    for (EMAnimal *animal in sortedWithDescriptors) {
+        NSLog(@"%@ - %@", NSStringFromClass([EMAnimal class]), animal.nickname);
+    }
+    
+    NSArray *sortedArray = [totalArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *key1, *key2;
+        if ([obj1 isKindOfClass:[EMHuman class]]) {
+            EMHuman * current = (EMHuman *) obj1;
+            key1 = current.name;
+        } else if ([obj1 isKindOfClass:[EMAnimal class]]) {
+            EMAnimal * current = (EMAnimal *) obj1;
+            key1 = current.nickname;
+        }
+        if ([obj2 isKindOfClass:[EMHuman class]]) {
+            EMHuman * current = (EMHuman *) obj2;
+            key2 = current.name;
+        } else if ([obj2 isKindOfClass:[EMAnimal class]]) {
+            EMAnimal * current = (EMAnimal *) obj2;
+            key2 = current.nickname;
+        }
+        return [key1 compare:key2];
+    }];
+
+    for (NSInteger i = 0; i < [sortedArray count]; i++) {
+        
+        if ([array[i] isKindOfClass:[EMHuman class]]) {
+            
+            EMHuman *somehuman = (EMHuman *) array[i];
+            NSLog(@"%@ - %@", NSStringFromClass([EMHuman class]), somehuman.name);
+            
+        } else if ([array[i] isKindOfClass:[EMAnimal class]]) {
+            
+            EMAnimal* animal = (EMAnimal *) array[i];            
+            NSLog(@"%@ - %@", NSStringFromClass([EMAnimal class]), animal.nickname);
+        }
+    }
 
     return YES;
 }
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-}
-
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
 
 @end
